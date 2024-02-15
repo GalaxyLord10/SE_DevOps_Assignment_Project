@@ -12,7 +12,6 @@ jobs:
     environment: staging
     steps:
       - name: Deploy to staging
-        uses: actions/checkout@v2
         run: |
           curl -X GET https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
       
