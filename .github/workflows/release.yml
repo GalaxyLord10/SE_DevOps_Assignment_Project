@@ -12,8 +12,9 @@ jobs:
     environment: staging
     steps:
       - name: Deploy to staging
-        uses: johnbeynon/render-deploy-action@v0.0.8
-        with:
-          service-id: ${{ secrets.RENDER_SERVICE_ID }}
-          api-key: ${{ secrets.RENDER_API_KEY }}
-          wait-for-success: true
+        uses: actions/checkout@v2
+        name: Run cURL
+        run: |
+          curl -X GET https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+      
+          
