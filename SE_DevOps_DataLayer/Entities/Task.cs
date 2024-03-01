@@ -15,9 +15,7 @@ namespace SE_DevOps_DataLayer.Entities
         public string Description { get; set; }
         public DateTime DueDate { get; set; }
         public bool IsCompleted { get; set; }
-        public int UserId { get; set; } // Foreign key to User
-        public User User { get; set; }
-        public int? CategoryId { get; set; } // Optional, foreign key to Category
-        public Category Category { get; set; } // Optional
+        public int? CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

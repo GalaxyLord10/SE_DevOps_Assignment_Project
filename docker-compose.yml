@@ -1,0 +1,20 @@
+﻿version: '3.8'
+services:
+  app:
+    container_name: sedevopsassignmentproject
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "32768:8080"
+    depends_on:
+      - db
+  db:
+    container_name: postgresdb
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: se_devops_assignment_project
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres#Xzmypb21
+    ports:
+      - "5432:5432"
