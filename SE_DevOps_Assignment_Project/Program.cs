@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DATABASE_URL"))
+    options.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_URL"))
 );
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
