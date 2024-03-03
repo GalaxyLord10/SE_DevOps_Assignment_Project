@@ -21,7 +21,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 var app = builder.Build();
 
 
-var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+var dbContext = app.Services.GetRequiredService<AppDbContext>();
 dbContext.Database.Migrate();
 
 
