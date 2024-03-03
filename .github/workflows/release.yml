@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Deploy to staging
         run: |
+          curl -X POST https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }} -d [{"key":"DATABASE_URL_INTERNAL","value":"${{ secrets.DATABASE_URL_INTERNAL }}"}]
           curl -X GET https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
   
   deploy_prod:
