@@ -20,9 +20,12 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 
-
-var dbContext = app.Services.GetRequiredService<AppDbContext>();
-dbContext.Database.Migrate();
+using (var scope = app.Services.CreateScope())
+{
+    var scopedServices = scope.ServiceProvider;
+    var dbContext = scopedServices.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
+}
 
 
 // Configure the HTTP request pipeline.
