@@ -1,0 +1,23 @@
+﻿version: '3.8'
+services:
+    app: 
+      container_name: sedevopsassignmentproject
+      build:
+        context: ..
+        dockerfile: SE_DevOps_Assignment_Project/Dockerfile
+      environment:
+        - DATABASE_URL=${DATABASE_URL}
+      ports:
+        - "32767:8080"
+      depends_on:
+        - db
+    db:
+      container_name: postgresdbrender
+      image: postgres:latest
+      environment:
+        DATABASE_HOST: ${POSTGRES_HOST}
+        DATABASE_DB: ${POSTGRES_DB}
+        DATABASE_USER: ${POSTGRES_USER}
+        DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      ports:
+        - "5432:5432"

@@ -362,5 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# docker-compose
-docker-compose.yml
+# Environment file for local
+/SE_DevOps_Assignment_Project/.env
