@@ -4,4 +4,4 @@ global:
 scrape_configs:
   - job_name: 'aspnetcore-app'
     static_configs:
-      - targets: ['se-devops-staging']
+      - targets: ['se-devops-staging.onrender.com']
