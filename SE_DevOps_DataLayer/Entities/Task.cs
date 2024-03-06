@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace SE_DevOps_DataLayer.Entities
 {
@@ -17,5 +18,7 @@ namespace SE_DevOps_DataLayer.Entities
         public bool IsCompleted { get; set; }
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
+        public string UserId { get; set; }
+        public IdentityUser User { get; set; }
     }
 }

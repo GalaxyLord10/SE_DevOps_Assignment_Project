@@ -28,11 +28,15 @@ namespace SE_DevOps_DataLayer
                 entity.Property(e => e.Description).HasMaxLength(500);
                 entity.Property(e => e.DueDate).HasColumnType("timestamp without time zone");
                 entity.Property(e => e.IsCompleted).IsRequired();
-                // Conditional configuration if Category is used
                 entity.HasOne(e => e.Category)
                       .WithMany(c => c.Tasks)
                       .HasForeignKey(e => e.CategoryId)
-                      .OnDelete(DeleteBehavior.SetNull); // Or choose the appropriate delete behavior
+                      .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasOne<IdentityUser>()
+                      .WithMany()
+                      .HasForeignKey(t => t.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
 
             // Configure Category entity (if used)
@@ -40,6 +44,11 @@ namespace SE_DevOps_DataLayer
             {
                 entity.HasKey(e => e.CategoryId);
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+                entity.HasOne<IdentityUser>()
+                      .WithMany()
+                      .HasForeignKey(t => t.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
             });
         }
 

@@ -1,0 +1,93 @@
+﻿@page "/tasks"
+
+@model IEnumerable<SE_DevOps_DataLayer.Entities.Task>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12">
+            <h1>Tasks</h1>
+            <a href="/Tasks/Create" class="btn btn-primary">Create New Task</a>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Due Date</th>
+                        <th>Completed</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any(m => m.TaskId))
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Title</td>
+                                <td>@item.DueDate.ToString("yyyy-MM-dd")</td>
+                                <td>@item.IsCompleted</td>
+                                <td>
+                                    <a href="/Tasks/Details/@item.TaskId" class="btn btn-info">Details</a>
+                                    <a href="/Tasks/Edit/@item.TaskId" class="btn btn-warning">Edit</a>
+                                    <a href="/Tasks/Delete/@item.TaskId" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@*
+@{
+    ViewData["Title"] = "Tasks";
+    Layout = "/Shared/_Layout.cshtml";
+}
+
+<h1 class="mb-4">@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Task</a>
+</p>
+
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Due Date</th>
+                <th scope="col">Completed</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DueDate.ToShortDateString())</td>
+                    <td>
+                        <input type="checkbox" asp-for="@item.IsCompleted" disabled
+                        @(item.IsCompleted ? "checked" : "") />
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.TaskId" class="btn btn-outline-secondary btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.TaskId" class="btn btn-outline-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        No tasks found. Create a new task to get started.
+    </div>
+}
+ *@
