@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" enabled="true">
+        <Configuration>
+          <CodeCoverage>
+
+            <ModulePaths>
+              <Include>
+                <ModulePath>.*SE_DevOps_Assignment_Project\.dll$</ModulePath>
+                <ModulePath>.*SE_DevOps_DataLayer\.dll$</ModulePath>
+              </Include>
+              <Exclude>
+                <ModulePath>.*Tests\.dll$</ModulePath>
+              </Exclude>
+            </ModulePaths>
+
+            <Attributes>
+              <Exclude>
+                <Attribute>^System\.Diagnostics\.CodeAnalysis\.ExcludeFromCodeCoverageAttribute$</Attribute>
+              </Exclude>
+            </Attributes>
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+
+
+  <TestRunParameters>
+    <Parameter name="webAppUrl" value="http://localhost:12345" />
+  </TestRunParameters>
+
+  <TestSessionTimeout>10000</TestSessionTimeout>
+
+  <LoggerRunSettings>
+    <Loggers>
+      <Logger friendlyName="trx" />
+    </Loggers>
+  </LoggerRunSettings>
+
+  <RunConfiguration>
+    <TargetPlatform>x64</TargetPlatform>
+    <TargetFrameworkVersion>Framework45</TargetFrameworkVersion>
+  </RunConfiguration>
+
+</RunSettings>

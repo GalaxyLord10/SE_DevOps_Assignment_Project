@@ -2,16 +2,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Prometheus;
 using SE_DevOps_DataLayer;
+using SE_DevOps_DataLayer.Interfaces;
+using SE_DevOps_DataLayer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
+ 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_URL"))
+    options.UseNpgsql("Host=host.docker.internal;Port=5432;Database=se_devops_assignment_project;Username=postgres;Password=postgres#Xzmypb21")
 );
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddScoped<ITaskService, TaskService>();
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => 
 {
     options.SignIn.RequireConfirmedAccount = true;
 }).AddEntityFrameworkStores<AppDbContext>();

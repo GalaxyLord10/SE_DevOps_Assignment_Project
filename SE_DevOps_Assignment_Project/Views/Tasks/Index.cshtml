@@ -1,0 +1,60 @@
+﻿@using SE_DevOps_DataLayer.Common
+@model IEnumerable<SE_DevOps_DataLayer.Entities.Task>
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var category = Enum.GetValues(typeof(Category));
+    var alert = TempData["Alert"] != null ? TempData["Alert"].ToString().ToLower() : "";
+}
+
+<h2>Task List</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@alert alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Completed</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Category</td>
+                <td>@item.Title</td>
+                <td>@item.Description</td>
+                <td>@item.DueDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.IsCompleted</td>
+                <td>
+                    <div class="row">
+                        <div class="col">
+                            <a asp-action="Edit" asp-route-id="@item.TaskId" class="btn btn-info">Edit</a>
+                        </div>
+                        <div class=" col">
+                            <a asp-action="Delete" asp-route-id="@item.TaskId" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Create New Task</a>
