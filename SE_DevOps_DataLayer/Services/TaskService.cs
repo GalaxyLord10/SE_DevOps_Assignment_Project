@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SE_DevOps_DataLayer.Entities; // Import the namespace where Task is defined
-using System.Linq;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SE_DevOps_DataLayer.Interfaces;
 
 namespace SE_DevOps_DataLayer.Services
 {
-    public class TaskService
+    public class TaskService : ITaskService
     {
         private readonly AppDbContext _context;
 
@@ -13,50 +13,41 @@ namespace SE_DevOps_DataLayer.Services
             _context = context;
         }
 
-        public async Task<List<Entities.Task>> GetAllTasksAsync(string userId)
+        public async Task<List<Entities.Task>> GetAllTasksAsync(IdentityUser user)
         {
             return await _context.Tasks
-                .Where(t => t.UserId == userId)
-                .Include(t => t.Category)
+                .Where(t => t.UserId == user.Id)
                 .ToListAsync();
         }
 
-        public async Task<Entities.Task> GetTaskByIdAsync(int taskId, string userId)
+        public async Task<Entities.Task> GetTaskByIdAsync(int taskId, IdentityUser user)
         {
-            // Ensuring that the task belongs to the user
-            return await _context.Tasks
-                .Include(t => t.Category)
-                .FirstOrDefaultAsync(t => t.TaskId == taskId && t.UserId == userId);
+            return await _context.Tasks.FirstOrDefaultAsync(t => t.TaskId == taskId && t.UserId == user.Id);
         }
 
-        public async Task<Entities.Task> AddTaskAsync(Entities.Task task, string userId)
+        public async Task<Entities.Task> AddTaskAsync(Entities.Task task, IdentityUser user)
         {
-            task.UserId = userId; // Set the UserId to the current user's ID
+            task.UserId = user.Id;
+            task.User = user;
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
             return task;
         }
 
-        public async Task<Entities.Task> UpdateTaskAsync(Entities.Task task, string userId)
+        public async Task<Entities.Task> UpdateTaskAsync(Entities.Task task, IdentityUser user)
         {
-            var existingTask = await _context.Tasks
-                .AsNoTracking() // Use AsNoTracking when you fetch the task to update
-                .FirstOrDefaultAsync(t => t.TaskId == task.TaskId && t.UserId == userId);
-
-            if (existingTask == null)
-            {
-                return null; // Task not found or doesn't belong to the user
-            }
+            task.UserId = user.Id;
+            task.User = user;
 
             _context.Entry(task).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return task;
         }
 
-        public async System.Threading.Tasks.Task DeleteTaskAsync(int taskId, string userId)
+        public async Task DeleteTaskAsync(int taskId, IdentityUser user)
         {
             var task = await _context.Tasks
-                .FirstOrDefaultAsync(t => t.TaskId == taskId && t.UserId == userId);
+                .FirstOrDefaultAsync(t => t.TaskId == taskId && t.UserId == user.Id);
 
             if (task != null)
             {
