@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
  
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql("Host=host.docker.internal;Port=5432;Database=se_devops_assignment_project;Username=postgres;Password=postgres#Xzmypb21")
+    options.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_URL"))
 );
 
 builder.Services.AddScoped<ITaskService, TaskService>();
