@@ -33,5 +33,11 @@ namespace SE_DevOps_Assignment_Project.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [Route("/Error/401")]
+        public IActionResult ErrorUnAuthorised()
+        {
+            return View();
+        }
     }
 }
