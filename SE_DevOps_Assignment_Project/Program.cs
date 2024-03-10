@@ -1,27 +1,31 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Prometheus;
+using SE_DevOps_Assignment_Project;
 using SE_DevOps_DataLayer;
+using SE_DevOps_DataLayer.Interfaces;
+using SE_DevOps_DataLayer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
+ 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_URL"))
 );
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddScoped<ITaskService, TaskService>();
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => 
 {
     options.SignIn.RequireConfirmedAccount = true;
-}).AddEntityFrameworkStores<AppDbContext>();
+}).AddRoles<IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 
 var app = builder.Build();
 
-app.UseMetricServer(url: "/metrics");
+await AdminUserAndRoleSeeder.SeedAdminUserAndRoleAsync(app.Services);
 
 using (var scope = app.Services.CreateScope())
 {
@@ -29,6 +33,7 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scopedServices.GetRequiredService<AppDbContext>();
     dbContext.Database.Migrate();
 }
+
 
 
 // Configure the HTTP request pipeline.
@@ -46,6 +51,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<PrometheusMetricsAuthorizationMiddleware>();
 
 app.MapRazorPages();
 app.MapControllerRoute(

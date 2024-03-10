@@ -222,24 +222,6 @@ namespace SE_DevOps_DataLayer.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SE_DevOps_DataLayer.Entities.Category", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CategoryId"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("CategoryId");
-
-                    b.ToTable("Categories");
-                });
-
             modelBuilder.Entity("SE_DevOps_DataLayer.Entities.Task", b =>
                 {
                     b.Property<int>("TaskId")
@@ -248,7 +230,7 @@ namespace SE_DevOps_DataLayer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TaskId"));
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("Category")
                         .HasColumnType("integer");
 
                     b.Property<string>("Description")
@@ -267,9 +249,19 @@ namespace SE_DevOps_DataLayer.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId1")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("TaskId");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Tasks");
                 });
@@ -327,17 +319,19 @@ namespace SE_DevOps_DataLayer.Migrations
 
             modelBuilder.Entity("SE_DevOps_DataLayer.Entities.Task", b =>
                 {
-                    b.HasOne("SE_DevOps_DataLayer.Entities.Category", "Category")
-                        .WithMany("Tasks")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Category");
-                });
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("SE_DevOps_DataLayer.Entities.Category", b =>
-                {
-                    b.Navigation("Tasks");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

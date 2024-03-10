@@ -14,7 +14,6 @@ namespace SE_DevOps_DataLayer
         }
 
         public DbSet<Task> Tasks { get; set; }
-        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,18 +27,12 @@ namespace SE_DevOps_DataLayer
                 entity.Property(e => e.Description).HasMaxLength(500);
                 entity.Property(e => e.DueDate).HasColumnType("timestamp without time zone");
                 entity.Property(e => e.IsCompleted).IsRequired();
-                // Conditional configuration if Category is used
-                entity.HasOne(e => e.Category)
-                      .WithMany(c => c.Tasks)
-                      .HasForeignKey(e => e.CategoryId)
-                      .OnDelete(DeleteBehavior.SetNull); // Or choose the appropriate delete behavior
-            });
+                entity.Property(e => e.Category);
 
-            // Configure Category entity (if used)
-            modelBuilder.Entity<Category>(entity =>
-            {
-                entity.HasKey(e => e.CategoryId);
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+                entity.HasOne<IdentityUser>()
+                      .WithMany()
+                      .HasForeignKey(t => t.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
         }
 
