@@ -20,7 +20,7 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Run unit tests
-        run: dotnet test normal --settings tests.runsettings
+        run: dotnet test --verbosity normal --settings tests.runsettings
 
   deploy_staging:
     if: github.event_name == 'push' && github.ref == 'refs/heads/develop'

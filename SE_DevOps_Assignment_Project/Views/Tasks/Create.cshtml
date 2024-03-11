@@ -33,7 +33,7 @@
 
     <div class="mb-3">
         <label asp-for="DueDate" class="form-label">Due Date</label>
-        <input asp-for="DueDate" type="date" min="@DateTime.UtcNow.ToString("yyyy-MM-dd")" class="form-control" />
+        <input asp-for="DueDate" type="date" min="@DateTime.UtcNow.ToString("yyyy-MM-dd")" value="@DateTime.UtcNow.ToString("yyyy-MM-dd")" class="form-control" />
         <span asp-validation-for="DueDate" class="text-danger"></span>
     </div>
 
