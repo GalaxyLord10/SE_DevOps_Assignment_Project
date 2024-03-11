@@ -15,9 +15,10 @@ namespace SE_DevOps_DataLayer.Services
 
         public async Task<List<Entities.Task>> GetAllTasksAsync(IdentityUser user)
         {
-            return await _context.Tasks
+            var tasks = await _context.Tasks
                 .Where(t => t.UserId == user.Id)
                 .ToListAsync();
+            return tasks;
         }
 
         public async Task<Entities.Task> GetTaskByIdAsync(int taskId, IdentityUser user)
