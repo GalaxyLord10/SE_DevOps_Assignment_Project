@@ -3,7 +3,7 @@
 
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutProfile.cshtml";
 
     var category = Enum.GetValues(typeof(Category));
     var alert = TempData["Alert"] != null ? TempData["Alert"].ToString().ToLower() : "";

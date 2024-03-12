@@ -37,7 +37,7 @@ namespace SE_DevOps_Assignment_Project.Controllers
         [Route("/Error/401")]
         public IActionResult ErrorUnAuthorised()
         {
-            return View();
+            return View("~/Areas/Identity/Pages/Account/AccessDenied.cshtml");
         }
     }
 }
