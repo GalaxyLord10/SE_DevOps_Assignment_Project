@@ -2,13 +2,13 @@ name: CI/CD Pipeline
 
 on:
   pull_request:
-    branches: [ develop, master ]
+    branches: [ develop ]
   push:
     branches: [ develop, master ]
 
 jobs:
   unit_tests:
-    if: github.base_ref == 'develop'
+    # Run for both pull requests into develop and pushes to develop/master
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -23,6 +23,7 @@ jobs:
         run: dotnet test --verbosity normal --settings tests.runsettings
 
   deploy_staging:
+    # Run after unit_tests if pushing to develop
     if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
     needs: unit_tests
     runs-on: ubuntu-latest
@@ -33,6 +34,7 @@ jobs:
           curl -X GET https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
 
   deploy_prod:
+    # Run after deploy_staging if pushing to master
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     needs: deploy_staging
     runs-on: ubuntu-latest
