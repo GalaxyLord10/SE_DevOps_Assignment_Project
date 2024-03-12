@@ -18,7 +18,7 @@ namespace SE_DevOps_Assignment_Project
                 var roleManager = scopedServices.GetRequiredService<RoleManager<IdentityRole>>();
 
                 var roleName = "Admin";
-                var adminEmail = "trueadmin@gmail.com";
+                var adminEmail = Environment.GetEnvironmentVariable("ADMIN_USER");
                 var adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
 
                 var dbContext = scopedServices.GetRequiredService<AppDbContext>();
