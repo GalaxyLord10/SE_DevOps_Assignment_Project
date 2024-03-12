@@ -1,7 +1,65 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
 }
 
+@if (!SignInManager.IsSignedIn(User))
+{
 <div class="text-center">
-    <partial name="_LoginPartial" />
+    <div class="container text-black">
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">Register & Login</h2>
+                <p class="lead">
+                    To register, simply click "Register" in the navigation bar and sign up. Once you register it will ask you to click a link to confirm your email
+                    which is meant to simulate email confirmation as currently there is no server configured to deliver an actual email. You will only be able to login if you click that link.
+                </p>
+            </div>
+            <div class="col-md-5">
+                <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="/lib/images/secure-login.png" alt="" width="500" height="500">
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7 order-md-2">
+                <h2 class="featurette-heading">Logged in?</h2>
+                <p class="lead">Once you are logged in, you can view your Tasks list to create, edit, or delete them. You can also check out your Profile section in the navigation bar.</p>
+            </div>
+            <div class="col-md-5 order-md-1">
+                <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="/lib/images/todo-list.png" alt="" width="500" height="500">
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">Are you an Admin?</h2>
+                <p class="lead">If yes, then you can view /metrics which shows you monitoring log data scraped by Prometheus.</p>
+                <br />
+                <p class="lead">You can also manage users by clicking the "Manage Users" button once you are logged in.</p>
+
+            </div>
+            <div class="col-md-5">
+                <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" src="/lib/images/web-monitoring.png" alt="" width="500" height="500">
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+    </div>
+
 </div>
+
+}
+
+

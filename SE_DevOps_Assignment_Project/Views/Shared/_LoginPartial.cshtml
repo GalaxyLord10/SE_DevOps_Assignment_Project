@@ -3,20 +3,14 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<div class="nav-link text-center">
-@if (SignInManager.IsSignedIn(User))
-{
-    <div class="nav">
-        <a id="tasks" class="btn btn-outline-info text-dark" style="width:50%" href="/tasks" title="Manage">View my Tasks</a>
+<body>
+    <div class="nav-link text-center">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="nav">
+                <a id="tasks" class="btn btn-outline-info text-dark" style="width:50%" href="/tasks" title="Manage">View my Tasks</a>
+            </div>
+        }
     </div>
-}
-else
-{
-    <div class="nav-item">
-        <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </div>
-    <div class="nav-item">
-        <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </div>
-}
-</div>
+
+</body></>
