@@ -12,15 +12,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_URL"))
 );
-
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<ITaskService, TaskService>();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+    options.Lockout.DefaultLockoutTimeSpan = default;
+
 }).AddRoles<IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
 
 
 var app = builder.Build();
@@ -36,7 +40,7 @@ using (var scope = app.Services.CreateScope())
 
 
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
