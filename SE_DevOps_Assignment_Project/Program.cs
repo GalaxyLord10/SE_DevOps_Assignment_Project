@@ -20,7 +20,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.SignIn.RequireConfirmedAccount = true;
     options.Lockout.MaxFailedAccessAttempts = 5;
     options.Lockout.AllowedForNewUsers = true;
-    options.Lockout.DefaultLockoutTimeSpan = default;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 
 }).AddRoles<IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
