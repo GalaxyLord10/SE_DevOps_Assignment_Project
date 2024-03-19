@@ -15,6 +15,7 @@ If you do not confirm your account then your user will not be created
 ![image](https://github.com/GalaxyLord10/SE_DevOps_Assignment_Project/assets/41874717/46f671d6-b18c-424a-bd09-1e336beb8c45)
 
 Once you have confirmed you will see this:
+
 ![image](https://github.com/GalaxyLord10/SE_DevOps_Assignment_Project/assets/41874717/1ae8301e-f0f1-49aa-b857-1789986728be)
 
 Next, proceed to login with your registered account:
