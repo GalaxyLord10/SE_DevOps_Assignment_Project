@@ -15,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddScoped<ITaskService, TaskService>();
 
+// Configure Identity options
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
