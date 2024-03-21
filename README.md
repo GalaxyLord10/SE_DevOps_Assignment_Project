@@ -21,7 +21,7 @@ Internal connection is used when the service seeking connection to the hosted da
 ![image](https://github.com/GalaxyLord10/SE_DevOps_Assignment_Project/assets/41874717/3e073e95-c687-430a-b671-31ed6cf97e4b)
 
 
-# application Functionality
+# Application Functionality
 
 Go to the website: https://se-devops-k.onrender.com
 Note: It may take some time to warm up initially because Render scales it down due to inactivity when using the Free tier.
