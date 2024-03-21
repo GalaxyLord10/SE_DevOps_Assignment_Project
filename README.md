@@ -1,4 +1,27 @@
-## How does the application work?
+# Hosting on Render
+### On Render there are 3 web services and 3 databases. 
+
+**se-devops-staging** is the Staging Environment Webservice.  
+**se-devops-PROD** is the Production Environment Webservice.  
+**prometheus-monitoring** is where the Prometheus monitoring.  
+
+**STAGING_DB** is the Staging Environment's PostgreSQL database.  
+**PROD_DB** is the Production Environment's PostgreSQL database.  
+**local-db** is the Local Environment's PostgreSQL database so that local development can be conducted on any machine without needed to install PostgreSQL locally.
+
+Render does not support .NET natively but does support Docker. Since, the application is containerised in Docker, the application can be hosted on Render by selecting Docker as runtime and providing the path to the Dockerfile.
+
+![image](https://github.com/GalaxyLord10/SE_DevOps_Assignment_Project/assets/41874717/75624c64-bb12-43c7-ad0d-8bb0b7a74f7c)
+
+## Database Connection
+On Render, the hosted PostgreSQL allows two types of connections - internal and external.  
+External connection is used when services outside of Render want to connect to the hosted PostgreSQL database e.g., connecting from **local machine** to hosted **local-db**.\
+Internal connection is used when the service seeking connection to the hosted database is also hosted on Render e.g., **se-devops-staging** and **STAGING_DB**
+
+![image](https://github.com/GalaxyLord10/SE_DevOps_Assignment_Project/assets/41874717/3e073e95-c687-430a-b671-31ed6cf97e4b)
+
+
+# application Functionality
 
 Go to the website: https://se-devops-k.onrender.com
 Note: It may take some time to warm up initially because Render scales it down due to inactivity when using the Free tier.
